@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-BASE_URL = os.getenv("BASE_URL", "https://safezone.streamlit.app")
+BASE_URL = os.getenv("BASE_URL", "https://thekopyspot.streamlit.app/")
 QR_DIR = "qr_codes"
 
 def generate_qr_for_tables(num_tables=10):

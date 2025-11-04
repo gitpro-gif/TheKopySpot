@@ -5,19 +5,24 @@ from fpdf import FPDF
 from dotenv import load_dotenv
 import urllib.parse
 
+
 # Load environment variables
 load_dotenv()
 OWNER_NUMBER = os.getenv("OWNER_WHATSAPP_NUMBER")
-BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")  # deployment URL
+BASE_URL = os.getenv("BASE_URL", "https://thekopyspot.streamlit.app/")  # deployment URL
+
 
 # Load menu
 with open("menu.json", "r") as f:
     menu_json = json.load(f)
 
+
 categories = list(menu_json.keys())
 num_categories = len(categories)
 
+
 st.set_page_config(page_title="The Kopi spot Order", page_icon="🍴", layout="centered")
+
 
 # Table number
 query_params = st.experimental_get_query_params()
@@ -25,17 +30,22 @@ table_number = query_params.get("table", [None])[0]
 if not table_number:
     table_number = st.text_input("Enter your table number:", placeholder="e.g. 4")
 
+
 if not OWNER_NUMBER:
     st.warning("Set OWNER_WHATSAPP_NUMBER in .env file to enable WhatsApp messaging.")
 
+
 if table_number and OWNER_NUMBER:
+
 
     st.subheader(f"Table: {table_number}")
     st.info("Explore more dishes by going to the arrow →")
 
+
     # Initialize or get current category index in session state
     if "category_index" not in st.session_state:
         st.session_state.category_index = 0
+
 
     # Navigation buttons for categories
     col_prev, col_next = st.columns([1, 1])
@@ -48,12 +58,15 @@ if table_number and OWNER_NUMBER:
             if st.session_state.category_index < num_categories - 1:
                 st.session_state.category_index += 1
 
+
     current_category = categories[st.session_state.category_index]
     st.markdown(f"### {current_category}")
+
 
     # Initialize order in session state if not present
     if 'order' not in st.session_state:
         st.session_state.order = []
+
 
     # Show menu items of current category only
     for item in menu_json[current_category]:
@@ -62,6 +75,7 @@ if table_number and OWNER_NUMBER:
             selected = st.checkbox(f"{item['name']} - Rs. {item['price']}", key=f"item_{item['id']}")
         with col2:
             qty = st.number_input(f"Qty (for {item['name']})", min_value=0, max_value=10, value=0, key=f"qty_{item['id']}")
+
 
         if selected and qty > 0:
             # Add or update item in order
@@ -77,7 +91,9 @@ if table_number and OWNER_NUMBER:
             # If unchecked or qty=0, remove from order if exists
             st.session_state.order = [d for d in st.session_state.order if d['id'] != item['id']]
 
+
     total_amount = sum(i["price"] * i["quantity"] for i in st.session_state.order)
+
 
     if st.session_state.order:
         st.write("### Order Summary")
@@ -87,10 +103,12 @@ if table_number and OWNER_NUMBER:
     else:
         st.info("No items selected yet.")
 
+
     # Customer details
     st.subheader("Enter Your Details for Receipt")
     name = st.text_input("Name")
     date = st.date_input("Order Date")
+
 
     def generate_pdf_receipt(name, order, total, date):
         pdf = FPDF()
@@ -120,14 +138,29 @@ if table_number and OWNER_NUMBER:
         pdf.cell(0, 10, "Thank you for ordering from Safe-zone!", ln=True)
         return pdf.output(dest='S').encode('latin-1')
 
-    if st.button("Generate Receipt & Send to Owner"):
+
+    if st.button("Generate Receipt"):
         if not name:
             st.error("Please enter your name.")
         elif not st.session_state.order:
             st.error("Please select at least one item.")
         else:
             receipt_pdf = generate_pdf_receipt(name, st.session_state.order, total_amount, date)
+            
+            # Download PDF receipt button
+            st.download_button(
+                "Download Receipt PDF",
+                data=receipt_pdf,
+                file_name="receipt.pdf",
+                mime="application/pdf"
+            )
 
+    if st.button("Send Order to Owner"):
+        if not name:
+            st.error("Please enter your name.")
+        elif not st.session_state.order:
+            st.error("Please select at least one item.")
+        else:
             # Compose message for owner
             order_summary = "\n".join([f"{d['quantity']}x {d['name']}" for d in st.session_state.order])
             message_owner = (
@@ -139,23 +172,18 @@ if table_number and OWNER_NUMBER:
             )
             encoded_message = urllib.parse.quote(message_owner)
             whatsapp_link = f"https://wa.me/{OWNER_NUMBER}?text={encoded_message}"
-
-            # Download PDF receipt
-            st.download_button(
-                "Download Receipt PDF",
-                data=receipt_pdf,
-                file_name="receipt.pdf",
-                mime="application/pdf"
-            )
-
+            
             # Show WhatsApp link for owner
             st.markdown(f"[Send order to Owner on WhatsApp 📲]({whatsapp_link})", unsafe_allow_html=True)
+
 
 else:
     st.warning("Please enter table number and ensure OWNER_WHATSAPP_NUMBER is set in .env.")
 
+
 # Note: QR code generation button removed to hide from users.
 # You can handle QR code generation separately in a standalone script.
+
 
 # Hide style
 st.markdown(
