@@ -1,0 +1,46 @@
+{
+  "Coffee & Espresso": [
+    {"id": 8, "name": "Cold Coffee", "price": 89},
+    {"id": 9, "name": "Americano", "price": 35},
+    {"id": 10, "name": "Hot Coffee", "price": 35},
+    {"id": 11, "name": "Coffee Lemonade", "price": 79},
+    {"id": 12, "name": "Iced Americano", "price": 59},
+    {"id": 13, "name": "Hot Tea", "price": 20},
+    {"id": 14, "name": "Black Pineapple", "price": 79},
+    {"id": 15, "name": "Blue Tea", "price": 49},
+    {"id": 16, "name": "Black Orange", "price": 79},
+    {"id": 17, "name": "Hibiscus Tea", "price": 59},
+    {"id": 18, "name": "Strawberry Latte", "price": 69},
+    {"id": 19, "name": "Lemon Tea", "price": 20},
+    {"id": 20, "name": "Dalgona Coffee", "price": 89},
+    {"id": 21, "name": "Iced Coffee", "price": 69},
+    {"id": 22, "name": "Vietnamese Coffee", "price": 79}
+  ],
+  "Breakfast & Snacks": [
+    {"id": 1, "name": "Bread Butter", "price": 49},
+    {"id": 2, "name": "Bread Butter Toast", "price": 49},
+    {"id": 3, "name": "Omelette", "price": 39},
+    {"id": 4, "name": "Bread Omelette", "price": 69},
+    {"id": 5, "name": "Vada Pav", "price": 55},
+    {"id": 6, "name": "Bun Maska", "price": 45},
+    {"id": 7, "name": "Cheese Omelette", "price": 59}
+  ],
+  "Maggie": [
+    {"id": 23, "name": "Plain Maggie", "price": 49},
+    {"id": 24, "name": "Vegetable Maggie", "price": 69},
+    {"id": 25, "name": "Veg Cheese Maggie", "price": 79},
+    {"id": 26, "name": "Cheese Corn Maggie", "price": 79},
+    {"id": 27, "name": "Punjabi Tadka Maggie", "price": 89}
+  ],
+  "Sandwiches": [
+    {"id": 28, "name": "Plain Veg Sandwich", "price": 119},
+    {"id": 29, "name": "Veg Cheese Sandwich", "price": 129},
+    {"id": 30, "name": "Grilled Cheese Sandwich", "price": 119},
+    {"id": 31, "name": "Cheese Corn Sandwich", "price": 129},
+    {"id": 32, "name": "Paneer Tikka Sandwich", "price": 169}
+  ],
+  "Refreshers": [
+    {"id": 33, "name": "Ice Lemon Tea", "price": 89},
+    {"id": 34, "name": "Peach Ice Tea", "price": 89}
+  ]
+}

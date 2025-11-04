@@ -1,0 +1,4 @@
+streamlit
+fpdf
+qrcode[pil]
+python-dotenv

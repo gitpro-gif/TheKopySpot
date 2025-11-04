@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.egg
+.eggs/
+*.pyc
+
+# Environment files
+.env
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs
+
+# Streamlit cache and logs (optional)
+.streamlit/
+
+# QR code images folder
+qr_codes/
+
+# VSCode settings
+.vscode/
+
+venv/
